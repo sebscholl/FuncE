@@ -1,10 +1,10 @@
-# Funcy
+# FuncE
 
-Funcy (pronounced "FUNK-E") is a Ruby gem that provides a clean interface between Node.js functions and Ruby applications. It allows developers to leverage JavaScript code within a Ruby environment, offering a Function-as-a-Service (FaaS)-like experience.
+FuncE (pronounced "FUNK-E") is a Ruby gem that provides a clean interface between Node.js functions and Ruby apps. It lets developers to call JavaScript functions from their Ruby code, offering a Function-as-a-Service (FaaS)-like experience.
 
 ## Requirements
 
-To use Funcy, you must have Node.js installed in the environment where your Ruby application is running. This applies to both local development and production servers.
+To use FuncE, you must have Node.js installed in the environment where your Ruby application is running. This applies to both local development and production servers.
 
 You can check if Node.js is installed by running:
 
@@ -19,7 +19,7 @@ If Node.js is not installed, you can download it from the [official Node.js webs
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'funcy'
+gem 'func_e'
 ```
 
 And then execute:
@@ -31,17 +31,23 @@ bundle install
 Or install it yourself as:
 
 ```bash
-gem install funcy
+gem install func_e
+```
+
+Install the `funcs` directory using the rake task.
+
+```sh
+bundle exec rake func_e:install
 ```
 
 ## Usage
 
 ### Basic Example
 
-First, require the gem in your Ruby application:
+First, require the gem in your Ruby application. If you're using `FuncE` in a Rails application, it will get loaded via railtie.
 
 ```ruby
-require 'funcy'
+require 'func_e'
 ```
 
 To use a Node.js function, create a JavaScript file with the function you want to execute:
@@ -50,31 +56,51 @@ To use a Node.js function, create a JavaScript file with the function you want t
 
 ```javascript
 /** 
- * app_root/funcy/functions/helloFn.js
+ * app_root/funcs/helloFn.js
  */
 module.exports = function(input) {
   return { 
-    message: `Hello ${input.planet}!`
+    result: `Hello ${input.planet}!`
   };
 };
 ```
 
-Then, call the function from your Ruby code:
+Then create an instance of the function using the `FuncE::Func` class, supplying the name of the JS file, and run it.
 
 ```ruby
-puts Funcy.run('helloFn', { planet: 'world' })
-=> Output: { message: "Hello world!" }
+func = FuncE::Func.new('helloFn')
+
+func.run({ planet: 'world' })
+
+puts func
+=> <FuncE::Func:0x00007fe0cd39f4d0
+ @name="helloFn",
+ @path=#<Pathname:/home/sebscholl/func_e/test/dummy/funcs/helloFn.js>,
+ @payload={:planet=>"world"},
+ @result={:result=>"Hello, world!"},
+ @run_at=Sat, 31 Aug 2024 19:23:57.129544604 UTC +00:00,
+ @run_time=0.172700613
+>
 ```
 
-### Require and Async
+The return value of the `run` method will be the functions result. However, the result is also gets stored on the instance itself.
 
-Funcy works with both asyncronous functions and requiring packages/files. Funcy is simply CommonJS and doesn't support ES Modules (ESM), so note that import statements are not supported. 
+### Requires and Async
+
+FuncE works with both asyncronous functions and requiring packages/files. FuncE is simply CommonJS and doesn't support ES Modules (ESM), so note that import statements are not supported. 
+
+Simply change into the `funcs` directory and use `npm` or `yarn` to install any required packages.
+
+```sh
+cd funcs
+npm i --save lodash
+```
 
 **Example `addNumbers.js`:**
 
 ```javascript
 /**
- * app_root/funcy/functions/addNumbers.js
+ * app_root/funcs/addNumbers.js
  */
 const _ = require('lodash')
 
@@ -90,40 +116,35 @@ module.exports = async function(input) {
 ```
 
 ```ruby
-result = Funcy.run('addNumbers', { a: 5, b: 10 })
-puts result
+puts FuncE::Func.new('addNumbers').run({ a: 5, b: 10 })
 => { result: 15 }
 ```
 
 ### Custom Configuration
 
-Funcy is designed to work out-of-the-box, but you can customize its behavior with various options:
+FuncE is designed to work out-of-the-box, but you can customize its behavior with:
 
 ```ruby
-Funcy.configure do |config|
-  config.parser = :json                            # Set the response parser (:plain, :json)
-  config.timeout = 5000                            # Set a timeout on all functions (5000 milliseconds)
-  config.memory_limit = '512MB'                    # Set memory limit on all functions (512MB)
-  config.fn_dir_path = 'root/funcy'                 # Set the relative path to the Funcy directory
-  config.node_path = '/usr/local/bin/node'         # Set the Node.js binary path
+FuncE.configure do |config|
+  config.fn_dir_path = 'my_funcs_dir' # Set the relative path to the FuncE directory
 end
 ```
 
 ## Error Handling
 
-Funcy will raise an exception if there is an error during the execution of the JavaScript function. You can handle these exceptions in your Ruby code:
+FuncE will return an error payload if an exception was raised during execution.
 
 ```ruby
-begin
-  result = Funcy.run('someFunction', { key: 'value' })
-rescue Funcy::Error => e
-  puts "An error occurred: #{e.message}"
-end
+FuncE::Func.new('addNumbers').run(1)
+=> { 
+  error: 'An error occurred while executing the node function.',
+  message: e.message
+}
 ```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at [https://github.com/your_username/funcy](https://github.com/your_username/funcy). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](https://www.contributor-covenant.org/version/2/0/code_of_conduct.html) code of conduct.
+Bug reports and pull requests are welcome on GitHub at [https://github.com/your_username/FuncE](https://github.com/your_username/FuncE). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](https://www.contributor-covenant.org/version/2/0/code_of_conduct.html) code of conduct.
 
 ## License
 
@@ -131,4 +152,4 @@ The gem is available as open-source under the terms of the [MIT License](https:/
 
 ## Acknowledgements
 
-Funcy was inspired by the need to bridge the gap between Ruby and Node.js, enabling developers to utilize the best of both worlds without the hassle of managing separate services.
+FuncE was inspired by the need to bridge the gap between Ruby and Node.js, enabling developers to utilize the best of both worlds without the hassle of managing separate services.

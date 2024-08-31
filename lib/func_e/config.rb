@@ -8,12 +8,12 @@ module FuncE
   class Config
     include Singleton
 
+    DEFAULT_INSTALL_DIR = 'funcs'
+
     attr_accessor :fn_dir_path
 
     def self.configure
       yield instance
-
-      @fn_dir_path = 'funcs' if @fn_dir_path.nil?
     end
 
     def self.config
@@ -26,11 +26,11 @@ module FuncE
 
     def self.install_path
       if defined?(Rails)
-        Rails.root.join(@fn_dir_path)
+        Rails.root.join(@fn_dir_path || DEFAULT_INSTALL_DIR)
       elsif defined?(Bundler)
-        Bundler.root.join(@fn_dir_path)
+        Bundler.root.join(@fn_dir_path || DEFAULT_INSTALL_DIR)
       else
-        Dir.pwd
+        Pathname.new(Dir.pwd).join(@fn_dir_path || DEFAULT_INSTALL_DIR)
       end
     end
   end

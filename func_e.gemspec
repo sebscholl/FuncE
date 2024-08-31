@@ -3,7 +3,7 @@
 # rubocop:disable all
 Gem::Specification.new do |spec|
   spec.name          = 'func_e'
-  spec.version       = '0.0.2'
+  spec.version       = '0.0.4'
   spec.authors       = ['Sebastian Scholl']
   spec.email         = ['sebscholl@gmail.com']
 
@@ -15,16 +15,13 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.5'
 
-  spec.files         = Dir['lib/**/*.rb'] + Dir['exe/**/*'] + Dir['README.md']
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ['lib']
+  spec.files         = Dir['lib/**/*'] + Dir['README.md']
 
   spec.add_runtime_dependency 'json', '~> 2.0'
   spec.add_runtime_dependency 'terrapin', '~> 0.6'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
-
-  spec.require_paths = ['lib']
 end
 # rubocop:enable all

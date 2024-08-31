@@ -10,8 +10,7 @@ module FuncE
     railtie_name :func_e
 
     rake_tasks do
-      path = File.expand_path(__dir__)
-      Dir.glob("#{path}/tasks/**/*.rake").each { |f| load f }
+      Dir.glob("#{File.expand_path(__dir__)}/tasks/**/*.rake").each { |f| load f }
     end
   end
 end

@@ -3,7 +3,7 @@
 # rubocop:disable all
 Gem::Specification.new do |spec|
   spec.name          = 'func_e'
-  spec.version       = '0.0.1'
+  spec.version       = '0.0.2'
   spec.authors       = ['Sebastian Scholl']
   spec.email         = ['sebscholl@gmail.com']
 
@@ -24,5 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'terrapin', '~> 0.6'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
+
+  spec.require_paths = ['lib']
 end
 # rubocop:enable all

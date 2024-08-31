@@ -25,7 +25,13 @@ module FuncE
     end
 
     def self.install_path
-      defined?(Rails) ? Rails.root.join(@fn_dir_path) : Bundler.root.join(@fn_dir_path)
+      if defined?(Rails)
+        Rails.root.join(@fn_dir_path)
+      elsif defined?(Bundler)
+        Bundler.root.join(@fn_dir_path)
+      else
+        Dir.pwd
+      end
     end
   end
 end

@@ -11,7 +11,7 @@ module FuncE
     end
 
     def path
-      Bundler.root.join FuncE::Config.get(:fn_dir_path), "#{@name}.js"
+      FuncE::Config.install_path.join("#{@name}.js")
     end
 
     def run(payload)

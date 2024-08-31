@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'terrapin'
 require 'func_e/func'
 require 'func_e/config'
 
@@ -7,10 +8,10 @@ require 'func_e/config'
 module FuncE
   require 'railtie' if defined?(Rails)
 
-  RUNNER_PATH = "#{File.expand_path(__dir__)}/func_e.js".freeze
+  RUNNER_PATH = "#{File.expand_path(__dir__)}/func_e.js"
 
   def self.exec(func)
-    JSON.parse line.run(path: func.path, payload: func.serialize_payload)
+    JSON.parse line.run(path: func.path, payload: func.serialize_payload), symbolize_names: true
   rescue Terrapin::CommandLineError => e
     { error: 'An error occurred while executing the node function.', message: e.message }
   end

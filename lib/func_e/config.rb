@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'singleton'
+
 # Path: func_e/lib/func_e/config.rb
 module FuncE
   # Singleton class for configuring FuncE.
@@ -20,6 +22,10 @@ module FuncE
 
     def self.get(key)
       instance.send(key)
+    end
+
+    def self.install_path
+      defined?(Rails) ? Rails.root.join(@fn_dir_path) : Bundler.root.join(@fn_dir_path)
     end
   end
 end

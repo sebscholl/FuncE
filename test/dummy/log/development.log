@@ -1,0 +1,26 @@
+Started GET "/" for 127.0.0.1 at 2024-09-11 15:08:46 -0400
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/sebscholl/.asdf/installs/ruby/3.3.0/lib/ruby/gems/3.3.0/gems/railties-7.2.1/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/sebscholl/.asdf/installs/ruby/3.3.0/lib/ruby/gems/3.3.0/gems/railties-7.2.1/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.9ms | GC: 0.0ms)
+Completed 200 OK in 27ms (Views: 7.8ms | GC: 0.2ms)
+
+
+Started GET "/icon.png" for 127.0.0.1 at 2024-09-11 15:08:47 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/icon.png"):
+  
+Started GET "/icon.png" for 127.0.0.1 at 2024-09-11 15:08:47 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/icon.png"):
+  
+Started GET "/" for 127.0.0.1 at 2024-09-11 15:08:51 -0400
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/sebscholl/.asdf/installs/ruby/3.3.0/lib/ruby/gems/3.3.0/gems/railties-7.2.1/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/sebscholl/.asdf/installs/ruby/3.3.0/lib/ruby/gems/3.3.0/gems/railties-7.2.1/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.6ms | GC: 0.0ms)
+
+
+Started GET "/icon.png" for 127.0.0.1 at 2024-09-11 15:08:51 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/icon.png"):
+  

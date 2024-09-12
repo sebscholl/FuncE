@@ -1,4 +1,4 @@
-module.exports = function helloFn({ planet }) {
+module.exports = async function helloFn({ planet }) {
   return {
     result: `Hello, ${planet}!`
   }

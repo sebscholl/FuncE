@@ -9,8 +9,24 @@ class ConfigTest < Minitest::Test
     end
   end
 
+  def test_config_default_port
+    assert FuncE::Config::DEFAULT_PORT == 3030
+  end
+
+  def test_config_default_install_dir
+    assert FuncE::Config::DEFAULT_INSTALL_DIR == 'funcs'
+  end
+
   def test_config_fn_dir_path
     assert FuncE::Config.instance.respond_to?(:fn_dir_path=)
+  end
+
+  def test_config_local_server
+    assert FuncE::Config.instance.respond_to?(:local_server=)
+  end
+
+  def test_config_local_server_port
+    assert FuncE::Config.instance.respond_to?(:local_server_port=)
   end
 
   def test_config_install_path
@@ -18,6 +34,6 @@ class ConfigTest < Minitest::Test
   end
 
   def test_config_get
-    assert_equal FuncE::Config.instance.fn_dir_path, FuncE::Config.get(:fn_dir_path)
+    assert_equal FuncE::Config.instance.fn_dir_path, FuncE::Config.config.fn_dir_path
   end
 end

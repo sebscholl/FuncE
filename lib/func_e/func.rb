@@ -24,6 +24,10 @@ module FuncE
       @result
     end
 
+    def set_payload(payload)
+      @payload = payload
+    end
+
     def serialize_payload
       @payload.to_json
     end

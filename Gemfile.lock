@@ -1,9 +1,8 @@
 PATH
   remote: .
   specs:
-    func_e (0.0.3)
-      json (~> 2.0)
-      terrapin (~> 0.6)
+    func_e (0.0.5)
+      terrapin (>= 0.6)
 
 GEM
   remote: http://rubygems.org/
@@ -86,7 +85,6 @@ GEM
     connection_pool (2.4.1)
     crass (1.0.6)
     date (3.3.4)
-    docile (1.4.1)
     drb (2.2.1)
     erubi (1.13.0)
     globalid (1.2.1)
@@ -97,7 +95,6 @@ GEM
     irb (1.14.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    json (2.7.2)
     logger (1.6.0)
     loofah (2.22.0)
       crass (~> 1.0.2)
@@ -172,12 +169,6 @@ GEM
     reline (0.5.9)
       io-console (~> 0.5)
     securerandom (0.3.1)
-    simplecov (0.22.0)
-      docile (~> 1.1)
-      simplecov-html (~> 0.11)
-      simplecov_json_formatter (~> 0.1)
-    simplecov-html (0.12.3)
-    simplecov_json_formatter (0.1.4)
     stringio (3.1.1)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
@@ -201,7 +192,6 @@ DEPENDENCIES
   minitest
   rails
   rake
-  simplecov
   tzinfo-data
 
 BUNDLED WITH

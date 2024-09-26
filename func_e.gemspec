@@ -3,7 +3,7 @@
 # rubocop:disable all
 Gem::Specification.new do |spec|
   spec.name          = 'func_e'
-  spec.version       = '0.0.6'
+  spec.version       = '0.0.7'
   spec.authors       = ['Sebastian Scholl']
   spec.email         = ['sebscholl@gmail.com']
 

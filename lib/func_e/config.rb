@@ -9,20 +9,18 @@ module FuncE
     include Singleton
 
     DEFAULT_PORT = 3030
-    DEFAULT_INSTALL_DIR = 'funcs'
+    DEFAULT_DIR = 'funcs'
+    DEFAULT_SERVER = false
 
-    attr_accessor :fn_dir_path, :local_server, :local_server_port
+    attr_accessor :dir, :port, :server
 
     def self.configure
       yield instance
       
       # Set default values if they are not set.
-      instance.local_server ||= false
-      instance.local_server_port ||= DEFAULT_PORT
-      instance.fn_dir_path ||= DEFAULT_INSTALL_DIR
-
-      # Start the server if the local_server option is set to true.
-      FuncE::Http.start_server if instance.local_server
+      instance.dir ||= DEFAULT_DIR
+      instance.port ||= DEFAULT_PORT
+      instance.server ||= DEFAULT_SERVER
     end
 
     def self.config
@@ -31,12 +29,20 @@ module FuncE
 
     def self.install_path
       if defined?(Rails)
-        Rails.root.join(config.fn_dir_path)
+        Rails.root.join(config.dir)
       elsif defined?(Bundler)
-        Bundler.root.join(config.fn_dir_path)
+        Bundler.root.join(config.dir)
       else
-        Pathname.new(Dir.pwd).join(config.fn_dir_path)
+        Pathname.new(Dir.pwd).join(config.dir)
       end
+    end
+
+    def self.has_dependencies?
+      File.exist?("#{install_path}/package.json")
+    end
+
+    def self.npm_install
+      system("cd #{install_path} && npm i && cd #{`pwd`.strip}") if has_dependencies?
     end
   end
 end

@@ -3,9 +3,9 @@
 require 'json'
 require 'terrapin'
 
-require 'func_e/http'
 require 'func_e/func'
 require 'func_e/config'
+require 'func_e/server'
 
 # Path: lib/funcy.rb
 module FuncE
@@ -15,11 +15,11 @@ module FuncE
   SERVER_PATH = "#{File.expand_path(__dir__)}/func_e_server.js"
 
   def self.exec(func)
-    Config.config.local_server ? server(func) : runner(func)
+    Config.config.server ? server(func) : runner(func)
   end
 
   def self.server(func)
-    json_parse FuncE::Http.post(func).body
+    json_parse FuncE::Server.post(func).body
   rescue Errno::ECONNREFUSED
     { error: 'The server is not running. Please start the server before executing functions.' }
   end

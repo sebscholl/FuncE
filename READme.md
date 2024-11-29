@@ -126,9 +126,9 @@ FuncE is designed to work out-of-the-box, but you can customize its behavior wit
 
 ```ruby
 FuncE.configure do |config|
-  config.fn_dir_path = 'my_funcs_dir' # Set the relative path to the FuncE directory.
-  config.local_server_port = 3030 # Set a port number for the local node server to run on.
-  config.local_server = false # Call your functions via a node server running on localhost
+  config.dir = 'my_funcs_dir' # Set the relative path to the FuncE directory.
+  config.port = 3030 # Set a port number for the local node server to run on.
+  config.server = false # Call your functions via a node server running on localhost
 end
 ```
 
@@ -136,7 +136,7 @@ end
 
 By default, FuncE will load and executes a function code when the `run` or `exec` method is called. This can lead to slow execution time, as the function's file and any required packages all need to get read on each execution.
 
-Setting `local_server_port = true` when configuring the gem will spin up a node server on port 3030 (or a configured port number) and make functions available via POST requests on localhost. The `FuncE` module will automatically use the server for calling functions when `local_server_port = true` is set; using a server or the default CLI runner has no impact on how you write your code or methods you call. 
+Setting `server = true` when configuring the gem will spin up a node server on port 3030 (or a configured port number) and make functions available via POST requests on localhost. The `FuncE` module will automatically use the server for calling functions when `server = true` is set; using a server or the default CLI runner has no impact on how you write your code or methods you call. 
 
 The benefits of the server option is speed. Function calls that take ~300ms using the runner may be ~15ms using the server. Additionally, if for some reason you don't want to use the `FuncE` modules and classes when calling functions, requests can be made directly to the localhost endpoint like so:
 

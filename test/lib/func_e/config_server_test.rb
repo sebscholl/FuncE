@@ -3,47 +3,9 @@
 require './test/test_helper'
 
 class ConfigServerTest < Minitest::Test
-
-  SAMPLE_PACKAGE_JSON = <<-EOF
-    {
-      "name": "Test",
-      "version": "0.0.1",
-      "dependencies": {
-        "lodash": "^4.17.21"
-      }
-    }
-  EOF
-
-  LODASH_FN = <<-EOF
-    const _ = require('lodash');
-    module.exports = async function lodashFn({ data }) {
-      return {
-        result: _.sum(data)
-      }
-    }
-  EOF
-
   def setup
-    # Add a package.json file to the funcs directory.
-    File.open("#{FuncE::Config.install_path}/package.json", 'w') { |f| f.write(SAMPLE_PACKAGE_JSON) }
-    File.open("#{FuncE::Config.install_path}/lodashFn.js", 'w') { |f| f.write(LODASH_FN) }
-
-    FuncE::Config.configure do |config|
-      config.local_server = true
-      config.local_server_port = 3031
-    end
-
-    # Server initialization usually takes a second or two. Sleep for a brief period of
-    # time to ensure the server is up and running before any request is sent.
-    sleep(1)
-  end
-
-  def test_function_call_to_server
-    func = FuncE::Func.new('helloFn')
-
-    func.set_payload({ planet: 'Earth' })
-
-    assert FuncE.server(func)[:result] == "Hello, Earth!"
+    # Run serve rake task to start the server.
+    Thread.new { Rake::Task['func_e:serve'].invoke }
   end
 
   def test_function_call_to_server_with_dependency
@@ -55,16 +17,8 @@ class ConfigServerTest < Minitest::Test
   end
 
   def teardown
-    FuncE::Http.kill_server
-
-    File.delete("#{FuncE::Config.install_path}/lodashFn.js")
-    File.delete("#{FuncE::Config.install_path}/package.json")
-    File.delete("#{FuncE::Config.install_path}/package-lock.json")
+    FuncE::Server.kill
+    
     FileUtils.rm_rf("#{FuncE::Config.install_path}/node_modules")
-
-    FuncE::Config.configure do |config|
-      config.local_server = false
-      config.local_server_port = nil
-    end
   end
 end

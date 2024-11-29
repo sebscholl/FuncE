@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    func_e (0.0.6)
+    func_e (0.0.7)
       terrapin (>= 0.6)
 
 GEM
